@@ -20,7 +20,7 @@ const seedTasks = [
   { id: 5, name: 'Orange juice', status: 'pending' },
 ];
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/lab8';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://db:27017/lab8';
 
 mongoose.connect(MONGO_URI)
   .then(async () => {
