@@ -35,7 +35,7 @@ jobs:
           script: |
             cd ~/lab8-cicd
             git pull
-            docker compose pull
-            docker compose down
-            docker compose up -d
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d
 
