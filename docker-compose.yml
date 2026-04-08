@@ -1,20 +1,16 @@
-version: "3.9"
-
 services:
   app:
     build: .
+    image: aia1010/lab8-app:latest
     ports:
       - "3000:3000"
     environment:
       - DB_URL=mongodb://db:27017
     depends_on:
       - db
-
   db:
     image: mongo:6
     volumes:
       - db-data:/data/db
-      - ./init-db.js:/docker-entrypoint-initdb.d/init-db.js
-
 volumes:
   db-data:
