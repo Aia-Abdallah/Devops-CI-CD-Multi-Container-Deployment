@@ -1,41 +1,41 @@
-name: Deploy Multi-Container App
+name: Build and Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  build-and-push:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Login to Docker Hub
-        run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USER }}" --password-stdin
-
-      - name: Build and Push
-        run: |
-          docker build -t keronisem11/lab6-app:v2 .
-          docker push keronisem11/lab6-app:v2
-
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy to EC2 via SSH
-        uses: appleboy/ssh-action@master
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            cd ~/lab8-cicd
-            git pull origin main
-             docker ps -q --filter "publish=3000" | xargs -r docker stop
-             docker ps -aq --filter "publish=3000" | xargs -r docker rm
-             docker compose pull
-             docker compose down -v
-             docker compose up -d
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: aia1010/lab8-app:latest
+
+#      - name: Deploy to EC2
+#        uses: appleboy/ssh-action@v1.0.0
+#        with:
+#          host: ${{ secrets.EC2_HOST }}
+#          username: ubuntu
+#          key: ${{ secrets.EC2_SSH_KEY }}
+#          script: |
+#            cd ~/lab8-cicd
+#            git pull
+#            docker compose pull
+#            docker compose down
+#            docker compose up -d
+
