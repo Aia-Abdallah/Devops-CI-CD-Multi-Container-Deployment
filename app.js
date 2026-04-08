@@ -5,7 +5,7 @@ const { MongoClient } = require('mongodb');
 const app = express();
 const PORT = 3000;
 
-const DB_URL = process.env.DB_URL || 'mongodb://localhost:27017';
+const DB_URL = process.env.MONGODB_URI || 'mongodb://db:27017';
 const DB_NAME = 'tasksdb';
 
 let tasksCollection;
