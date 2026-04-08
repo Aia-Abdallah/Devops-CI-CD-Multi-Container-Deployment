@@ -26,16 +26,16 @@ jobs:
           push: true
           tags: aia1010/lab8-app:latest
 
-#      - name: Deploy to EC2
-#        uses: appleboy/ssh-action@v1.0.0
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ubuntu
-#          key: ${{ secrets.EC2_SSH_KEY }}
-#          script: |
-#            cd ~/lab8-cicd
-#            git pull
-#            docker compose pull
-#            docker compose down
-#            docker compose up -d
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/lab8-cicd
+            git pull
+            docker compose pull
+            docker compose down
+            docker compose up -d
 
