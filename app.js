@@ -23,6 +23,7 @@ async function connectDB() {
       { id: 3, name: 'Bread', status: 'pending' },
       { id: 4, name: 'Butter', status: 'pending' },
       { id: 5, name: 'Orange juice', status: 'pending' },
+      { id: 6, name: 'Tea', status: 'pending' },
     ]);
     console.log('✅ Database seeded');
   }
